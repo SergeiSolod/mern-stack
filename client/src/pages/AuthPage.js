@@ -9,13 +9,13 @@ const AuthPage = props => {
                     <div className="card-content white-text">
                         <span className="card-title">Авторизация</span>
                         <div>
-                            <div className="input-field col s6">
-                                <input placeholder="Placeholder" id="first_name" type="text" className="validate">
-                                    <label htmlFor="first_name">First Name</label>
+                            <div className="input-field">
+                                <input placeholder="Placeholder" id="email" type="text" name='email' className='yellow-input'/>
+                                    <label htmlFor="email">Email</label>
                             </div>
-                            <div className="input-field col s6">
-                                <input placeholder="Placeholder" id="first_name" type="text" className="validate">
-                                    <label htmlFor="first_name">First Name</label>
+                            <div className="input-field">
+                                <input placeholder="Placeholder" id="password" type="password" name='password' className='yellow-input'/>
+                                    <label htmlFor="password">Пароль</label>
                             </div>
                         </div>
                     </div>
