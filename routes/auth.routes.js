@@ -4,6 +4,7 @@ const {check, validationResult} = require('express-validator')
 const User = require('../models/User')
 const router = Router()
 
+// регистрация пользователя
 router.post(
     '/register',
     // массив middlewares, которые будут делать валидацию
@@ -39,8 +40,29 @@ router.post(
     }
 })
 
-router.post('/login', async (req, res) => {
+router.post(
+    '/login',
+    // массив валидаторов
+    [
+        check('email', 'Введите корректный email').normalizeEmail().isEmail(),
+        check('password', 'Введите пароль').exists()
+    ],
+    async (req, res) => {
+        try {
+            // валидация через экспресс входящих полей
+            const errors = validationResult(req)
+            if (!errors.isEmpty()) {
+                return res.status(400).json({
+                    errors: errors.array(),
+                    message: 'Некорректные данные при входе с систему'
+                })
+            }
 
+            const {email, password} = req.body
+
+        } catch (e) {
+            res.status(500).json({message: 'Что-то пошло не так, попробуйте снова'})
+        }
 })
 
 module.exports = router
