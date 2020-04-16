@@ -1,6 +1,15 @@
-import React from 'react'
+import React, {useState} from 'react'
 
 const AuthPage = props => {
+    const [form, setForm] = useState({
+        email: '', password: ''
+    })
+
+    const changeHandler = event => {
+        //определение поля, которое меняется
+            setForm({ ...form, [event.target.name]: event.target.value })
+    }
+
     return (
         <div className='row'>
             <div className="col s6 offset-s3">
@@ -10,11 +19,11 @@ const AuthPage = props => {
                         <span className="card-title">Авторизация</span>
                         <div>
                             <div className="input-field">
-                                <input placeholder="Placeholder" id="email" type="text" name='email' className='yellow-input'/>
+                                <input placeholder="Placeholder" onChange={changeHandler} id="email" type="text" name='email' className='yellow-input'/>
                                     <label htmlFor="email">Email</label>
                             </div>
                             <div className="input-field">
-                                <input placeholder="Placeholder" id="password" type="password" name='password' className='yellow-input'/>
+                                <input placeholder="Placeholder" onChange={changeHandler} id="password" type="password" name='password' className='yellow-input'/>
                                     <label htmlFor="password">Пароль</label>
                             </div>
                         </div>
