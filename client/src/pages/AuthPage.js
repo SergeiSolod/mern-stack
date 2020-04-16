@@ -7,3 +7,5 @@ const AuthPage = props => {
         </div>
     )
 }
+
+export default AuthPage
