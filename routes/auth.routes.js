@@ -57,8 +57,15 @@ router.post(
                     message: 'Некорректные данные при входе с систему'
                 })
             }
-
+            //получаем данные и ищем пользователя
             const {email, password} = req.body
+            const user = await User.findOne({ email })
+            // ошибка, если пользователя нет
+            if (!user) {
+                return res.status(400).json({ message: 'Пользователь не найден' })
+            }
+            // проверка совпадают ли пароли
+            const isMatch = await bcrypt.compare(password)
 
         } catch (e) {
             res.status(500).json({message: 'Что-то пошло не так, попробуйте снова'})
