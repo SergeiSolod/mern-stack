@@ -75,11 +75,13 @@ router.post(
             const token = jwt.sign(
                 // объект с данными, которые будут зашифрованы в данном токене
                 { userId: user.id },
-                //
+                // секретное слово
                 config.get('jwtSecret'),
-                //
-                { expiresIn: '' }
+                // через сколько токен закончит существование
+                { expiresIn: '1h' }
             )
+            // по умолчанию статус 200
+            res.json({ token, userId: user.id })
         } catch (e) {
             res.status(500).json({message: 'Что-то пошло не так, попробуйте снова'})
         }
