@@ -7,6 +7,11 @@ export const useHttp = () => {
     const request = useCallback(async (url, method = 'GET', body = null, headers = {}) => {
        setLoading(true)
         try {
+           // приводим данные с сервера к строке
+           if (body) {
+            body.JSON.stringify(body)
+           }
+
           const response =  await fetch(url, {
                 method, body, headers
             })
