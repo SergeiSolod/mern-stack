@@ -10,6 +10,8 @@ const AuthPage = props => {
             setForm({ ...form, [event.target.name]: event.target.value })
     }
 
+
+
     return (
         <div className='row'>
             <div className="col s6 offset-s3">
