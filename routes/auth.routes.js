@@ -1,5 +1,7 @@
 const {Router} = require('express')
 const bcrypt = require('bcryptjs')
+const config = require('config')
+const jwt = require('jsonwebtoken')
 const {check, validationResult} = require('express-validator')
 const User = require('../models/User')
 const router = Router()
@@ -64,9 +66,20 @@ router.post(
             if (!user) {
                 return res.status(400).json({ message: 'Пользователь не найден' })
             }
-            // проверка совпадают ли пароли
-            const isMatch = await bcrypt.compare(password)
-
+            // проверка совпадают ли пароли, сравнение зашифрованного пароля и пришедшего
+            const isMatch = await bcrypt.compare(password, user.password)
+            if (!isMatch) {
+                return res.status(400).json({ message: 'Неверный пароль, попробуйте снова' })
+            }
+            // авторизация через JWT токен
+            const token = jwt.sign(
+                // объект с данными, которые будут зашифрованы в данном токене
+                { userId: user.id },
+                //
+                config.get('jwtSecret'),
+                //
+                { expiresIn: '' }
+            )
         } catch (e) {
             res.status(500).json({message: 'Что-то пошло не так, попробуйте снова'})
         }
