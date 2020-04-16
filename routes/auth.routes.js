@@ -8,10 +8,20 @@ router.post(
     '/register',
     // массив middlewares, которые будут делать валидацию
     [
-
-    ]
+        check('email', 'Некорректный email').isEmail(),
+        check('password', 'Минимальная длина пароля 6 символов')
+            .isLength({ min: 6 })
+    ],
     async (req, res) => {
     try {
+        // валидация через экспресс входящих полей
+        const errors = validationResult(req)
+        if (!errors.isEmpty()) {
+            return res.status(400).json({
+                errors: errors.array(),
+                message: 'Некорректные данные при регистрации'
+            })
+        }
         const {email, password} = req.body
         const candidate = await User.findOne({email: email})
         // проверяем есть ли уже такой пользователь
