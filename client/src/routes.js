@@ -3,19 +3,20 @@ import {Switch, Route, Redirect} from "react-router-dom";
 import LinksPage from "./pages/LinksPage";
 import CreatePage from "./pages/CreatePage";
 import DetailPage from "./pages/DetialPage";
+import AuthPage from "./pages/AuthPage";
 
 export const useRoutes = isAuthenticated => {
     if (isAuthenticated) {
         return (
             <Switch>
                 <Route path='/links' exact>
-                    <LinksPage />
+                    <LinksPage/>
                 </Route>
                 <Route path='/create' exact>
-                    <CreatePage />
+                    <CreatePage/>
                 </Route>
                 <Route path='/detail/:id' exact>
-                    <DetailPage />
+                    <DetailPage/>
                 </Route>
                 <Redirect to='/create'/>
             </Switch>
@@ -23,7 +24,9 @@ export const useRoutes = isAuthenticated => {
     }
     return (
         <Switch>
-            <Route path='/' exact></Route>
+            <Route path='/' exact>
+                <AuthPage/>
+            </Route>
             <Redirect to='/'/>
         </Switch>
     )
