@@ -19,7 +19,6 @@ async function start() {
             useCreateIndex: true
         })
     } catch (e) {
-        console.log('Server Error', e.message)
         process.exit(1)
     }
 }

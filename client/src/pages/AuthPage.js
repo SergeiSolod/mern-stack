@@ -1,11 +1,16 @@
-import React, {useState} from 'react'
+import React, {useState, useEffect} from 'react'
 import {useHttp} from "../hooks/http.hook";
 
 const AuthPage = props => {
+    const message = useMessage()
     const {loading, error, request} = useHttp()
     const [form, setForm] = useState({
         email: '', password: ''
     })
+
+    useEffect(() => {
+
+    }, [error])
 
     const changeHandler = event => {
         //определение поля, которое меняется
@@ -15,7 +20,6 @@ const AuthPage = props => {
     const registerHandler = async () => {
         try {
             const data = await request('/api/auth/register', 'POST', {...form})
-            console.log('Data', data)
         } catch (e) {
 
         }
