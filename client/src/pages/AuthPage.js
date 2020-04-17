@@ -29,6 +29,15 @@ const AuthPage = props => {
     }
 
 
+    const loginHandler = async () => {
+        try {
+            const data = await request('/api/auth/login', 'POST', {...form})
+            message(data.message)
+        } catch (e) {
+
+        }
+    }
+
 
     return (
         <div className='row'>
@@ -49,7 +58,7 @@ const AuthPage = props => {
                         </div>
                     </div>
                     <div className="card-action">
-                        <button className='btn yellow darken-4' disabled={loading} style={{marginRight: 10}}>Войти</button>
+                        <button className='btn yellow darken-4' onClick={loginHandler} disabled={loading} style={{marginRight: 10}}>Войти</button>
                         <button className='btn grey lighten-1 black-text' onClick={registerHandler} disabled={loading}>Регистрация</button>
                     </div>
                 </div>
