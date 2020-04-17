@@ -1,16 +1,18 @@
 import React, {useState, useEffect} from 'react'
 import {useHttp} from "../hooks/http.hook";
+import {useMessage} from "../hooks/message.hook";
 
 const AuthPage = props => {
     const message = useMessage()
-    const {loading, error, request} = useHttp()
+    const {loading, error, request, clearError} = useHttp()
     const [form, setForm] = useState({
         email: '', password: ''
     })
 
     useEffect(() => {
-
-    }, [error])
+    message(error)
+        clearError()
+    }, [error, message, clearError])
 
     const changeHandler = event => {
         //определение поля, которое меняется
@@ -20,10 +22,13 @@ const AuthPage = props => {
     const registerHandler = async () => {
         try {
             const data = await request('/api/auth/register', 'POST', {...form})
+            message(data.message)
         } catch (e) {
 
         }
     }
+
+
 
     return (
         <div className='row'>

@@ -5,21 +5,21 @@ export const useHttp = () => {
     const [loading, setLoading] = useState(false)
     const [error, setError] = useState(null)
     const request = useCallback(async (url, method = 'GET', body = null, headers = {}) => {
-       setLoading(true)
+        setLoading(true)
         try {
-           // приводим данные с сервера к строке
+            // приводим данные с сервера к строке
             if (body) {
                 body = JSON.stringify(body)
                 // указываем, что передаём JSON
                 headers['Content-Type'] = 'application/json'
             }
 
-          const response =  await fetch(url, {
+            const response = await fetch(url, {
                 method, body, headers
             })
             const data = await response.json()
             if (!response.ok) {
-              throw new Error(data.message || 'Что-то пошло не так')
+                throw new Error(data.message || 'Что-то пошло не так')
             }
             setLoading(false)
             return data
@@ -30,7 +30,7 @@ export const useHttp = () => {
         }
     }, [])
 
-    const clearError = () => setError(null)
+    const clearError = useCallback(() => setError(null), [])
 
-    return {loading, request, error, setError}
+    return {loading, request, error, clearError}
 }
